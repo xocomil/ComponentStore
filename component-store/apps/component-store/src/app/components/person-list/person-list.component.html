@@ -1,0 +1,35 @@
+<div class="container mat-elevation-z8">
+  <table mat-table [dataSource]="people$">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="birth_year">
+      <th mat-header-cell *matHeaderCellDef> Birth Year </th>
+      <td mat-cell *matCellDef="let element"> {{element.birth_year}} </td>
+    </ng-container>
+    <ng-container matColumnDef="eye_color">
+      <th mat-header-cell *matHeaderCellDef> Eye Color </th>
+      <td mat-cell *matCellDef="let element"> {{element.eye_color}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef> Gender </th>
+      <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+    <ng-container matColumnDef="hair_color">
+      <th mat-header-cell *matHeaderCellDef> Hair Color </th>
+      <td mat-cell *matCellDef="let element"> {{element.hair_color}} </td>
+    </ng-container>
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef> Height (cm) </th>
+      <td mat-cell *matCellDef="let element"> {{element.height}} </td>
+    </ng-container>
+    <ng-container matColumnDef="mass">
+      <th mat-header-cell *matHeaderCellDef> Mass (kg) </th>
+      <td mat-cell *matCellDef="let element"> {{element.mass}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

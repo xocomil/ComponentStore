@@ -3,12 +3,12 @@ import { StarWarsApiService } from '../../services/star-wars-api.service';
 import { PersonStore } from '../../store/person.store';
 
 @Component({
-  selector: 'component-store-person-container-component',
-  templateUrl: './person-container-component.component.html',
-  styleUrls: ['./person-container-component.component.scss'],
+  selector: 'component-store-person-container',
+  templateUrl: './person-container.component.html',
+  styleUrls: ['./person-container.component.scss'],
   providers: [PersonStore],
 })
-export class PersonContainerComponentComponent implements OnInit {
+export class PersonContainerComponent implements OnInit {
   constructor(
     private readonly _personStore: PersonStore,
     private readonly _starWarsApi: StarWarsApiService
