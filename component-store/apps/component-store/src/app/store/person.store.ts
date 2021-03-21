@@ -16,6 +16,8 @@ export class PersonStore extends ComponentStore<PersonState> {
     super(defaultState);
   }
 
+  readonly people$ = this.select(({ people }) => people);
+
   readonly loadPeople = this.updater((state, people: Person[] | null) => ({
     ...state,
     people: people || [],
