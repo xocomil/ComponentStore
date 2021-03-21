@@ -51,7 +51,7 @@
               "apps/component-store/src/favicon.ico",
               "apps/component-store/src/assets"
             ],
-            "styles": ["apps/component-store/src/styles.scss"],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/indigo-pink.css", "apps/component-store/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
