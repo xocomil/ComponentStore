@@ -15,7 +15,11 @@ export class StarWarsApiService {
 
   getPeople(): Observable<Person[]> {
     return this._httpClient
-      .get<ApiResponse>(`${API_ROOT}/people`)
-      .pipe(map((res) => res.results));
+      .get(`${API_ROOT}/people`)
+      .pipe(
+        map((res: ApiResponse) =>
+          res.results.map((person, index) => ({ ...person, id: index }))
+        )
+      );
   }
 }
