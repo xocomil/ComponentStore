@@ -1,6 +1,7 @@
 {
   "version": 1,
   "cli": {
+    "analytics": "8693838b-bec1-4bb5-8f58-2d3fd3027892",
     "defaultCollection": "@nrwl/angular"
   },
   "defaultProject": "component-store",
