@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable } from 'rxjs';
-import { tap, withLatestFrom } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Person } from '../models/person';
+import { StarWarsApiService } from '../services/star-wars-api.service';
 
 export interface PersonState {
   people: Person[];
@@ -17,9 +18,34 @@ const defaultState: PersonState = {
 };
 
 @Injectable()
-export class PersonStore extends ComponentStore<PersonState> {
-  constructor() {
+export class PersonStore
+  extends ComponentStore<PersonState>
+  implements OnDestroy {
+  private _saveEditPerson$ = new Subject<void>();
+  private _subs = new Subscription();
+
+  constructor(private readonly _starWarsApiService: StarWarsApiService) {
     super(defaultState);
+
+    const saveWithData$ = this._saveEditPerson$.pipe(
+      withLatestFrom(this.editedPerson$, this.editorId$),
+      switchMap(([, person, personId]) =>
+        this._starWarsApiService.savePerson(personId, person)
+      )
+    );
+
+    this._subs.add(
+      saveWithData$.subscribe({
+        next: (person) => {
+          this.updatePerson(person);
+
+          this.clearEditedPerson();
+        },
+        error: (error) => {
+          console.error('An error happened while saving:', error);
+        },
+      })
+    );
   }
 
   readonly people$ = this.select(({ people }) => people);
@@ -57,4 +83,43 @@ export class PersonStore extends ComponentStore<PersonState> {
         })
       )
   );
+
+  readonly updatePerson = this.effect((person$: Observable<Person>) =>
+    person$.pipe(
+      withLatestFrom(this.people$),
+      tap<[Person, Person[]]>(([person, people]) => {
+        const id = person.id;
+        const index = people.findIndex((cur) => {
+          console.log('compare', cur, id, cur.id === id);
+          return cur.id === id;
+        });
+
+        console.log('index', index, person, people);
+
+        if (index > -1) {
+          const editedPeople = [...people];
+          editedPeople[index] = person;
+
+          this.loadPeople(editedPeople);
+        }
+      })
+    )
+  );
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
+  }
+
+  cancelEditPerson() {
+    this.clearEditedPerson();
+  }
+
+  private clearEditedPerson() {
+    this.setEditorId(undefined);
+    this.setEditedPerson(undefined);
+  }
+
+  saveEditPerson() {
+    this._saveEditPerson$.next();
+  }
 }

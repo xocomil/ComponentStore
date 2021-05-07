@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
 import { Person } from '../models/person';
 
@@ -21,5 +21,9 @@ export class StarWarsApiService {
           res.results.map((person, index) => ({ ...person, id: index }))
         )
       );
+  }
+
+  savePerson(id: number, person: Person) {
+    return of(person).pipe(delay(Math.random() * 2000));
   }
 }

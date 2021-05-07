@@ -12,4 +12,7 @@
     <mat-label>Gender</mat-label>
     <input matInput placeholder="How they identify" [(ngModel)]="person.gender" (ngModelChange)="personEdited()">
   </mat-form-field>
+  <div>
+    <component-store-save-person-component></component-store-save-person-component>
+  </div>
 </div>

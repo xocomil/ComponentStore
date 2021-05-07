@@ -13,6 +13,7 @@ import { EditDisplayComponent } from './components/edit-display/edit-display.com
 import { EditPersonComponent } from './components/edit-person/edit-person.component';
 import { PersonContainerComponent } from './components/person-container-component/person-container.component';
 import { PersonListComponent } from './components/person-list/person-list.component';
+import { SavePersonComponentComponent } from './components/save-person-component/save-person-component.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PersonListComponent } from './components/person-list/person-list.compon
     PersonListComponent,
     EditDisplayComponent,
     EditPersonComponent,
+    SavePersonComponentComponent,
   ],
   imports: [
     BrowserModule,
