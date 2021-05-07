@@ -9,6 +9,8 @@ import { PersonStore } from '../../store/person.store';
   providers: [PersonStore],
 })
 export class PersonContainerComponent implements OnInit {
+  editedPerson$ = this._personStore.editedPerson$;
+
   constructor(
     private readonly _personStore: PersonStore,
     private readonly _starWarsApi: StarWarsApiService

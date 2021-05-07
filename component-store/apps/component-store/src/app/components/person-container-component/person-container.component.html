@@ -1,1 +1,6 @@
 <component-store-person-list></component-store-person-list>
+<ng-container *ngIf="(editedPerson$ | async); let editPerson">
+  <component-store-edit-display [person]="$any(editPerson)"></component-store-edit-display>
+  <component-store-edit-person [person]="$any(editPerson)"></component-store-edit-person>
+  <component-store-edit-person [person]="$any(editPerson)"></component-store-edit-person>
+</ng-container>

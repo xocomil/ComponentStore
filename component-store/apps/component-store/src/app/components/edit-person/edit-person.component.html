@@ -1,0 +1,15 @@
+<div class="container mat-elevation-z8">
+  <mat-form-field class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name of person" [(ngModel)]="person.name" (ngModelChange)="personEdited()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Eye Color</mat-label>
+    <input matInput placeholder="Color of eyes (if applicable)" [(ngModel)]="person.eye_color"
+      (ngModelChange)="personEdited()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Gender</mat-label>
+    <input matInput placeholder="How they identify" [(ngModel)]="person.gender" (ngModelChange)="personEdited()">
+  </mat-form-field>
+</div>

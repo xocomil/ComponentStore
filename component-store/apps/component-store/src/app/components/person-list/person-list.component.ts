@@ -9,6 +9,9 @@ import { PersonStore } from '../../store/person.store';
 })
 export class PersonListComponent {
   people$ = this._personStore.people$;
+  editedPerson$ = this._personStore.editedPerson$;
+  editorId$ = this._personStore.editorId$;
+
   displayedColumns = [
     'name',
     'birth_year',
@@ -22,5 +25,7 @@ export class PersonListComponent {
 
   constructor(private readonly _personStore: PersonStore) {}
 
-  editPerson(id: number): void {}
+  editPerson(id: number): void {
+    this._personStore.editPerson(id);
+  }
 }
