@@ -61,6 +61,8 @@
     "@nrwl/linter": "12.1.1",
     "@nrwl/tao": "12.1.1",
     "@nrwl/workspace": "12.1.1",
+    "@types/jasmine": "^3.7.7",
+    "@types/jasminewd2": "^2.0.9",
     "@types/jest": "^26.0.21",
     "@types/node": "15.0.2",
     "@typescript-eslint/eslint-plugin": "4.22.1",

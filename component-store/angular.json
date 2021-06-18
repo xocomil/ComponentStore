@@ -20,13 +20,13 @@
     "@nrwl/angular:application": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest",
+      "unitTestRunner": "karma",
       "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:library": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "karma"
     },
     "@nrwl/angular:component": {
       "style": "scss"
@@ -149,9 +149,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/component-store-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/component-store-e2e/**/*.{js,ts}"]
           }
         }
       }
