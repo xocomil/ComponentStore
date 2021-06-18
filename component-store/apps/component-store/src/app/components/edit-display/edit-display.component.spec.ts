@@ -3,7 +3,7 @@ import { MockComponent } from 'ng-mocks';
 import { SavePersonComponentComponent } from '../save-person-component/save-person-component.component';
 import { EditDisplayComponent } from './edit-display.component';
 
-fdescribe('EditDisplayComponent', () => {
+describe('EditDisplayComponent', () => {
   const createComponent = createComponentFactory({
     component: EditDisplayComponent,
     declarations: [MockComponent(SavePersonComponentComponent)],
