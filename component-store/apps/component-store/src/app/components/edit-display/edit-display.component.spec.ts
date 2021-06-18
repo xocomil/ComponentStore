@@ -1,29 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { createComponentFactory } from '@ngneat/spectator';
 import { MockComponent } from 'ng-mocks';
 import { SavePersonComponentComponent } from '../save-person-component/save-person-component.component';
 import { EditDisplayComponent } from './edit-display.component';
 
 fdescribe('EditDisplayComponent', () => {
-  let component: EditDisplayComponent;
-  let fixture: ComponentFixture<EditDisplayComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        EditDisplayComponent,
-        MockComponent(SavePersonComponentComponent),
-      ],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EditDisplayComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  const createComponent = createComponentFactory({
+    component: EditDisplayComponent,
+    declarations: [MockComponent(SavePersonComponentComponent)],
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const spectator = createComponent();
+
+    expect(spectator).toBeTruthy();
   });
 
   it('should set the person', () => {
@@ -39,11 +28,8 @@ fdescribe('EditDisplayComponent', () => {
       skin_color: 'test color',
     };
 
-    component.person = testPerson;
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(
-      'Editing Test Person (0)'
-    );
+    const spectator = createComponent({ props: { person: testPerson } });
+
+    expect(spectator.element).toHaveText('Editing Test Person (0)');
   });
 });
