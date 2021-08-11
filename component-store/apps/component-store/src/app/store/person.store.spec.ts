@@ -1,4 +1,5 @@
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
+import { EMPTY, of } from 'rxjs';
 import { scan } from 'rxjs/operators';
 import { Person } from '../models/person';
 import { StarWarsApiService } from '../services/star-wars-api.service';
@@ -118,6 +119,83 @@ fdescribe('PersonStoreService', () => {
 
       expect(allIds).toEqual([undefined, 1]);
       expect(allEditedPerson).toEqual([undefined, people[0]]);
+    });
+  });
+
+  describe('saveEditPerson()', () => {
+    const people = createTestPeople();
+
+    beforeEach(() => {
+      spectator.service.loadPeople(people);
+    });
+
+    describe('Happy Path 😊', () => {
+      beforeEach(() => {
+        spectator.service.editPerson(1);
+      });
+
+      it('should call StarWarsApiService.savePerson() with editorId and editedPerson', () => {
+        const starWarsApiServiceMock = spectator.inject(StarWarsApiService);
+
+        starWarsApiServiceMock.savePerson.andReturn(EMPTY);
+
+        spectator.service.saveEditPerson();
+
+        expect(starWarsApiServiceMock.savePerson).toHaveBeenCalledWith(
+          1,
+          people[0]
+        );
+      });
+
+      describe('API Success', () => {
+        const apiResponse = {
+          ...people[0],
+          name: `${people[0].name} - Edited`,
+        };
+
+        beforeEach(() => {
+          const starWarsApiService = spectator.inject(StarWarsApiService);
+
+          starWarsApiService.savePerson.andReturn(of(apiResponse));
+        });
+
+        it('should update the store with the value returned from API', () => {
+          let emittedPeople: Person[];
+
+          spectator.service.people$.subscribe((emitted) => {
+            emittedPeople = emitted;
+          });
+
+          spectator.service.saveEditPerson();
+
+          expect(emittedPeople).toEqual([
+            apiResponse,
+            ...people.filter((cur) => cur.id !== 1),
+          ]);
+        });
+
+        it('should clear the editedPerson and editorId', () => {
+          let allIds: (number | undefined)[];
+          let allEditedPerson: Person[];
+
+          spectator.service.editorId$
+            .pipe(scan((acc: number[], cur) => [...acc, cur], []))
+            .subscribe((emits) => {
+              allIds = emits;
+            });
+
+          spectator.service.editedPerson$
+            .pipe(scan((acc: Person[], cur) => [...acc, cur], []))
+            .subscribe((emits) => {
+              allEditedPerson = emits;
+            });
+
+          spectator.service.saveEditPerson();
+
+          expect(allIds).toEqual([1, undefined]);
+          expect(allEditedPerson).toEqual([people[0], undefined]);
+        });
+      });
     });
   });
 });
