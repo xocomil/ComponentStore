@@ -43,7 +43,7 @@ const createTestPeople = (): Person[] => {
   ];
 };
 
-fdescribe('PersonStoreService', () => {
+describe('PersonStoreService', () => {
   let spectator: SpectatorService<PersonStore>;
 
   const createService = createServiceFactory({
